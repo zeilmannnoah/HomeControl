@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Col, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 
 export default class LoginPanelContents extends React.Component {
     constructor(props) {
@@ -7,25 +7,42 @@ export default class LoginPanelContents extends React.Component {
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkUserAndPass = this.checkUserAndPass.bind(this);
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            disabled: true
         }
     }
 
     handleUsernameChange(e) {
         this.setState({ 
             username: e.target.value,
-            password: this.state.password
         });
+        
+        this.checkUserAndPass();
     }
 
     handlePasswordChange(e) {
         this.setState({ 
-            username: this.state.username,
-            password: e.target.value 
+            password: e.target.value
         });
+
+        this.checkUserAndPass();
+    }
+
+    checkUserAndPass() {
+        if (this.state.username.length > 0 && this.state.password.length > 0) {
+            this.setState({
+                disabled: false
+            });
+        }
+    }
+
+    handleSubmit(e) {
+
     }
 
     render() {
@@ -33,7 +50,7 @@ export default class LoginPanelContents extends React.Component {
             <Row>
                 <Col md={12}>
                     <h2 className='text-center'>Sign In</h2>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                         <FormGroup controlId='usernameControl'>
                             <ControlLabel>Username</ControlLabel>
                             <FormControl
@@ -50,6 +67,12 @@ export default class LoginPanelContents extends React.Component {
                                 onChange={this.handlePasswordChange}
                             />
                         </FormGroup>
+                        <Button 
+                            className="center-block" 
+                            bsStyle="primary"
+                            type="submit"
+                            disabled={this.state.disabled}
+                           > Primary</Button>
                     </form>
                 </Col>
             </Row>
