@@ -34,6 +34,9 @@ module.exports = env => {
 					test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
 					loader: 'url-loader'
 				}
+            ],
+            noParse: [
+                /aws/
             ]
         },
         devtool: '#source-map',
@@ -46,6 +49,10 @@ module.exports = env => {
         devServer: {
             contentBase: './dist',
             historyApiFallback: true
+        },
+        node: {
+            fs: 'empty',
+            child_process: 'empty'
         }
     }
 }
