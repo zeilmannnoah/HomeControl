@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Grid, Row, Col, Nav, Navbar, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import { Grid, Row, Col, Nav, Navbar, NavDropdown, NavItem, MenuItem, Glyphicon, InputGroup, FormControl } from 'react-bootstrap';
+import UserService from '../../services/UserService.js';
 import './Home.css'
 
 export default class Home extends React.Component {
@@ -10,8 +11,10 @@ export default class Home extends React.Component {
         this.handleHome = this.handleHome.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
 
+        this.UserService = new UserService();
+
         this.state = {
-            fullname: null,
+            fullname: sessionStorage.getItem("fullname"),
             redirect: {
                 home: false,
                 logout: false
@@ -46,12 +49,29 @@ export default class Home extends React.Component {
                         </Navbar.Brand>
                     </Navbar.Header>
                     <Nav className='pull-right'>
-                        <NavDropdown eventKey={1} title={['User Name ', <Glyphicon glyph='user' key='userGlphy'/>]} id='user-drop'>
+                        <NavDropdown eventKey={1} title={[this.state.fullname+" ", <Glyphicon glyph='user' key='userGlphy'/>]} id='user-drop'>
                             <MenuItem eventKey={1.1} onClick={this.handleLogout}>Logout</MenuItem>
                             <MenuItem eventKey={1.2}>Settings</MenuItem>
                         </NavDropdown>
                     </Nav>
                 </Navbar>
+                <Col md={2} id='sidebar'>
+                    <InputGroup id="search">
+                        <FormControl type='text'/>
+                        <InputGroup.Addon><Glyphicon glyph='search' /></InputGroup.Addon>
+                    </InputGroup>
+                    <Nav stacked>
+                        <NavItem className='sidebar-option' eventKey={1} href="/home">
+                            NavItem 1 content
+                        </NavItem>
+                        <NavItem className='sidebar-option' eventKey={2} title="Item">
+                            NavItem 2 content
+                        </NavItem>
+                        <NavItem className='sidebar-option' eventKey={3} disabled>
+                            NavItem 3 content
+                        </NavItem>
+                    </Nav>
+                </Col>
             </div>
         );
     }

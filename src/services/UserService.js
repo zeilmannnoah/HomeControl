@@ -5,7 +5,7 @@ This is a really simple mock of the user service I plan to implement
 
 export default class UserService {
     constructor() {
-        this.fakeTable = [{username: 'nzeilmann', password: 'password', fullName:'Noah Zeilmann'}];
+        this.fakeTable = [{username: 'nzeilmann', password: 'password', fullname:'Noah Zeilmann'}];
         this.saltRounds = 1000
 
         //encryptPassword = encryptPassword.bind(this);
@@ -30,13 +30,15 @@ export default class UserService {
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {          
-                if (this.fakeTable.filter(el => el.username === username && el.password === password).length === 1) {
-                    resolve(true);
+                var user = this.fakeTable.filter(el => el.username === username && el.password === password);
+                if (user.length === 1) {
+                    sessionStorage.setItem("fullname", user[0].fullname);
+                    resolve();
                 }
                 else {
                     reject("User not found");
                 }
-            }, 1000);
+            }, 1500);
         });
         
     }

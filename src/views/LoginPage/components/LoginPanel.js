@@ -61,7 +61,7 @@ export default class LoginPanel extends React.Component {
         });
 
         this.UserService.login(e.target[0].value, e.target[1].value)
-        .then(success => {
+        .then(() => {
             this.setState({
                 authenticated: true
             });

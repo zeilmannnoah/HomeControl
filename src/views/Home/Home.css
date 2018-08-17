@@ -1,3 +1,28 @@
 #user-drop {
     margin-right: 17px;
+    color: #337ab7 !important;
+}
+
+#sidebar {
+    background-color: #f5f5f5;
+    border: solid #e7e7e7;
+    border-width: 0px 1px;
+    top: -20px;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+#search {
+    padding: 10px 15px 10px 15px !important;
+    border: solid #e7e7e7;
+    border-width: 0px 0px 1px;
+}
+
+.sidebar-option {
+    border: solid #e7e7e7;
+    border-width: 0px 0px 1px;
+}
+
+body {
+    background-color: #fff;
 }
