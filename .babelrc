@@ -1,16 +1,5 @@
 {
-    "presets": [["env",{
-        "targets": {
-            "browsers": [
-                "Chrome >= 52",
-                "Firefox >= 44",
-                "Safari >= 7",
-                "Explorer 11",
-                "last 4 Edge versions"
-            ]
-        },
-        "useBuiltins": true
-    }],"react","es2015"],
+    "presets": ["env", "react"],
     "plugins": [
         "transform-class-properties"
     ]

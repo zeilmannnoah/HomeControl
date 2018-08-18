@@ -28,7 +28,7 @@ module.exports = env => {
                 },
                 {
                     test: /\.css$/,
-                    loader: 'style-loader!css-loader'
+                    use: ['style-loader', 'css-loader']
                 },
                 {
 					test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
@@ -47,7 +47,12 @@ module.exports = env => {
         ],
         mode: 'development',
         devServer: {
-            contentBase: './dist'
+            contentBase: './dist',
+            historyApiFallback: true
+        },
+        node: {
+            fs: 'empty',
+            child_process: 'empty'
         }
     }
 }

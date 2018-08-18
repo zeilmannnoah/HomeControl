@@ -1,12 +1,12 @@
 /*
 This is a really simple mock of the user service I plan to implement
 */
-//import Bcrypt from 'bcrypt';
+import Bcrypt from 'bcryptjs';
 
 export default class UserService {
     constructor() {
         this.fakeTable = [{username: 'nzeilmann', password: 'password', fullname:'Noah Zeilmann'}];
-        this.saltRounds = 1000
+        this.saltRounds = 15;
 
         //encryptPassword = encryptPassword.bind(this);
     }
@@ -15,7 +15,7 @@ export default class UserService {
         this.fakeTable.push({username: username, password: encryptedPassword});
     }
 
-    /*
+    
     encryptPassword(password) {
         Bcrypt.genSalt(this.saltRounds, (err, salt) => {
             Bcrypt.hash(password, salt, (err, hash) => {
@@ -23,7 +23,6 @@ export default class UserService {
             })
         });
     }
-    */
 
     login(username, password) {
         // Add fake delay

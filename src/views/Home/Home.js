@@ -2,7 +2,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Grid, Row, Col, Nav, Navbar, NavDropdown, NavItem, MenuItem, Glyphicon, InputGroup, FormControl, PageHeader, Panel} from 'react-bootstrap';
 import UserService from '../../services/UserService.js';
-import WeatherService from '../../services/WeatherService.js';
+import UserPassDAO from '../../repositories/UserPassDAO.js';
+import WeatherPanel from './components/WeatherPanel.js';
 import './Home.css';
 
 export default class Home extends React.Component {
@@ -13,7 +14,7 @@ export default class Home extends React.Component {
         this.handleLogout = this.handleLogout.bind(this);
 
         this.UserService = new UserService();
-        this.WeatherService = new WeatherService();
+        this.UserPassDAO = new UserPassDAO();
 
         this.state = {
             fullname: sessionStorage.getItem("fullname"),
@@ -41,8 +42,6 @@ export default class Home extends React.Component {
         if (this.state.redirect.logout) {
             return <Redirect to='/'/>;
         }
-
-        this.WeatherService.fetchWeather();
 
         return (
             <Grid fluid>
@@ -95,12 +94,7 @@ export default class Home extends React.Component {
                         </Row>
                         <Row>
                             <Col md={3}>
-                                <Panel bsStyle="primary">
-                                    <Panel.Heading>
-                                        <Panel.Title componentClass="h3">Panel heading</Panel.Title>
-                                    </Panel.Heading>
-                                    <Panel.Body><a href='google.com'>Panel content</a></Panel.Body>
-                                </Panel>
+                                <WeatherPanel/>
                             </Col>
                             <Col md={3}>
                                 <Panel bsStyle="success">

@@ -91,7 +91,7 @@ export default class LoginPanel extends React.Component {
                     <Panel.Body>
                         <Row>
                             <Col md={12}>
-                                <h2 className='text-center'>Home Control</h2>
+                                <h2 className='text-center'>Home Control <Glyphicon glyph='home'/></h2>
                                 <img className='center-block' src={ajaxLoading} />
                             </Col>
                         </Row>
