@@ -1,7 +1,5 @@
+@import url('../../index.css');
+
 .center-vertically {
     margin-top: 5%;
-}
-
-body {
-    background-color:#f5f5f5;
 }

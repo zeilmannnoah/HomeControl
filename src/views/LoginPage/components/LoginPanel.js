@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Grid, Row, Col, Panel, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { Grid, Row, Col, Panel, FormGroup, ControlLabel, FormControl, Button, Glyphicon } from 'react-bootstrap';
 import UserService from '../../../services/UserService.js';
 import ajaxLoading from '../../../imgs/ajaxLoading.svg';
+import './loginPanel.css';
 
 export default class LoginPanel extends React.Component {
     constructor(props) {
@@ -104,7 +105,7 @@ export default class LoginPanel extends React.Component {
                 <Panel.Body>
                     <Row>
                         <Col md={12}>
-                            <h2 className='text-center'>Home Control</h2>
+                            <h2 className='text-center'>Home Control <Glyphicon glyph='home'/></h2>
                             <form onSubmit={this.handleSubmit}>
                                 <FormGroup controlId='usernameControl'>
                                     <ControlLabel>Username</ControlLabel>

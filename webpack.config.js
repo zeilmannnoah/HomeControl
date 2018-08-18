@@ -47,12 +47,7 @@ module.exports = env => {
         ],
         mode: 'development',
         devServer: {
-            contentBase: './dist',
-            historyApiFallback: true
-        },
-        node: {
-            fs: 'empty',
-            child_process: 'empty'
+            contentBase: './dist'
         }
     }
 }
