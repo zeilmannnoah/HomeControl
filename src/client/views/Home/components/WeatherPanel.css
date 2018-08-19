@@ -1,0 +1,9 @@
+@import url('../../../client.css');
+
+.weather-icon {
+	filter: invert(100%);
+}
+
+.loading {
+	width: 80%;
+}

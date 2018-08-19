@@ -1,13 +1,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-module.exports = env => {
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const outputDirectory = 'dist'
+
+module.exports = (env) => {
     env = env || {};
     return {
-        entry: ['babel-polyfill', './src/index.js'],
+        entry: './src/client/client.js',
         output: {
-            path: path.resolve(__dirname, "dist"),
+            path: path.resolve(__dirname, outputDirectory),
             filename: 'home-control.bundle.js',
-            sourceMapFilename: 'finalproject.bundle.map.js'
         },
         module: {
             rules: [
@@ -19,40 +21,28 @@ module.exports = env => {
                     }
                 },
                 {
-                    test: /\.html$/,
-                    use: [
-                        {
-                            loader: 'html-loader'
-                        }
-                    ]
-                },
-                {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader']
                 },
                 {
-					test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
+					test: /\.(woff|woff2|ttf|eot|svg|)$/i,
 					loader: 'url-loader'
 				}
             ],
-            noParse: [
-                /aws/
-            ]
         },
-        devtool: '#source-map',
         plugins: [
+            new CleanWebpackPlugin([outputDirectory]),
             new HtmlWebpackPlugin({
-                template: './src/index.html'
+                template: './src/public/index.html'
             })
         ],
-        mode: 'development',
         devServer: {
-            contentBase: './dist',
-            historyApiFallback: true
-        },
-        node: {
-            fs: 'empty',
-            child_process: 'empty'
+            port: 3000,
+            open: true,
+            historyApiFallback: true,
+            proxy: {
+                '/api': 'http://localhost:8080'
+            }
         }
     }
-}
+};

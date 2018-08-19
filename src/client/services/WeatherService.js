@@ -1,9 +1,9 @@
-import Auth from './auth.json';
+import Auth from '../../auth/Auth.json';
 import axios from 'axios';
 
 export default class WeatherService {
     constructor() {
-        this.apikey = Auth.keys.weather;
+        this.apikey = Auth.apis.weather.key;
 
         this.neutralIcons = ['03d', '03n', '04d', '04n', '50d', '50n'];
     }
@@ -11,11 +11,17 @@ export default class WeatherService {
     fetchWeather(when) {
         if (!when) {
         	return new Promise((resolve, reject) => {
-                axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=37.22&lon=-93.3&appid=${this.apikey}`)
+                axios.get('http://api.openweathermap.org/data/2.5/weather', {
+                    params: {
+                        lat: 37.22,
+                        lon: -93.3,
+                        appid: this.apikey
+                    }
+                })
                 .then(res => {
                     resolve({
                         name: res.data.name,
-                        icon: res.data.weather[0].icon,
+                        icon: this.neutralIcons.includes(res.data.weather[0].icon) ? res.data.weather[0].icon.replace(/[^0-9]/, "") : res.data.weather[0].icon,
                         desc: {
                             ext: res.data.weather[0].description,
                             min: res.data.weather[0].main

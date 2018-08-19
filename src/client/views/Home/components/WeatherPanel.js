@@ -9,7 +9,7 @@ export default class WeatherPanel extends React.Component {
         super(props);
 
         this.state = {
-            weathercode: null
+            weather: null
         }
 
         this.WeatherService = new WeatherService();
@@ -24,8 +24,6 @@ export default class WeatherPanel extends React.Component {
                 this.setState({
                     weather: data
                 });
-
-                console.log(data);
             })
             .catch(err => {
                 console.log(err);
@@ -37,12 +35,10 @@ export default class WeatherPanel extends React.Component {
     }
 
     render() {
-        
-
         return (
             <Panel bsStyle="primary">
                 <Panel.Heading>
-                    <img id='weather-icon' src={this.getImagePath()}/>
+                    <img className={this.state.weather ? 'weather-icon' : "loading center-block"} src={this.getImagePath()}/>
                     <Panel.Title componentClass="h3">Panel heading</Panel.Title>
                 </Panel.Heading>
                 <Panel.Body>Panel content</Panel.Body>

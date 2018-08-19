@@ -1,0 +1,9 @@
+@import url('../../../client.css');
+
+#forgot-btn {
+    margin-top: 10px;
+}
+
+#login-panel {
+	background-color: #f5f5f5  !important;
+}
