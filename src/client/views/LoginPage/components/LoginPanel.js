@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Grid, Row, Col, Panel, FormGroup, ControlLabel, FormControl, Button, Glyphicon } from 'react-bootstrap';
 import UserService from '../../../services/UserService.js';
-import ajaxLoading from '../../../imgs/ajaxLoading.svg';
+import ajaxLoading from '../../../imgs/squaresLoading.svg';
 import './loginPanel.css';
 
 export default class LoginPanel extends React.Component {

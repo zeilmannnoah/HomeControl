@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default class UserService {
     constructor() {
-        this.saltRounds = 15;
+        this.saltRounds = 10;
     }
 
     encryptPassword(password) {

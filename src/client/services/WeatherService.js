@@ -20,7 +20,6 @@ export default class WeatherService {
                     }
                 })
                 .then(res => {
-                    console.log(res);
                     resolve({
                         name: res.data.name,
                         icon: this.neutralIcons.includes(res.data.weather[0].icon) ? res.data.weather[0].icon.replace(/[^0-9]/, "") : res.data.weather[0].icon,

@@ -2,12 +2,20 @@
 
 .weather-icon {
 	filter: invert(100%);
-	padding-top: 7px;
-	transform: scale(2.5);
 }
 
-.loading {
-	width: 175%;
-    position: absolute;
-    top: -40px;
+.degree {
+	font-size: 35px;
+}
+
+.no-left-padding {
+	padding-left: 0px !important;
+}
+
+.padding-right-5 {
+	padding-right: 5px;
+}
+
+.desc {
+	white-space: nowrap;
 }

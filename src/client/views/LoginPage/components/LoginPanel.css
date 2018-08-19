@@ -8,6 +8,11 @@
 	background-color: #f5f5f5  !important;
 }
 
+#login-panel-dark {
+    background-color: #36393f  !important;
+    color: white;
+}
+
 .panel-heading {
     height: 110px;
 }

@@ -3,6 +3,9 @@ import { Redirect } from 'react-router-dom';
 import { Grid, Row, Col, Nav, Navbar, NavDropdown, NavItem, MenuItem, Glyphicon, InputGroup, FormControl, PageHeader, Panel} from 'react-bootstrap';
 import UserService from '../../services/UserService.js';
 import WeatherPanel from './components/WeatherPanel.js';
+import LightPanel from './components/LightPanel.js';
+import Panel3 from './components/Panel3.js';
+import Panel4 from './components/Panel4.js';
 import './Home.css';
 
 export default class Home extends React.Component {
@@ -59,34 +62,38 @@ export default class Home extends React.Component {
                     </Navbar>
                 </Row>
                 <Row>
-                    <Col md={3} className='fluid'>
-                        <Col md={11} id='sidebar' className='fluid'>
-                            <InputGroup id="search">
-                                <FormControl type='text' placeholder="Search..."/>
-                                <InputGroup.Addon><Glyphicon glyph='search' /></InputGroup.Addon>
-                            </InputGroup>
-                            <Nav stacked>
-                                <NavItem className='sidebar-option' eventKey={2}>
-                                    My PC
-                                </NavItem>
-                                <NavItem className='sidebar-option' eventKey={3}>
-                                    Air Conditioning
-                                </NavItem>
-                                <NavItem className='sidebar-option' eventKey={4}>
-                                    Weather Forecast
-                                </NavItem>
-                                <NavItem className='sidebar-option' eventKey={5}>
-                                    Blackboard
-                                </NavItem>
-                                <NavItem className='sidebar-option' eventKey={6}>
-                                    My Missouri State
-                                </NavItem>
-                            </Nav>
-                        </Col>
+                    <Col md={2} id='sidebar' className='fluid'>
+                        <InputGroup id="search">
+                            <FormControl type='text' placeholder="Search..."/>
+                            <InputGroup.Addon><Glyphicon glyph='search' /></InputGroup.Addon>
+                        </InputGroup>
+                        <Nav stacked>
+                            <NavItem className='sidebar-option' eventKey={2}>
+                                My PC
+                            </NavItem>
+                            <NavItem className='sidebar-option' eventKey={3}>
+                                Air Conditioning
+                            </NavItem>
+                            <NavItem className='sidebar-option' eventKey={4}>
+                                Weather Forecast
+                            </NavItem>
+                            <NavItem className='sidebar-option' eventKey={3}>
+                                Lights
+                            </NavItem>
+                            <NavItem className='sidebar-option' eventKey={3}>
+                                Calander
+                            </NavItem>
+                            <NavItem className='sidebar-option' eventKey={5}>
+                                Blackboard
+                            </NavItem>
+                            <NavItem className='sidebar-option' eventKey={6}>
+                                My Missouri State
+                            </NavItem>
+                        </Nav>
                     </Col>
-                    <Col md={9}  id='main-col'>
+                    <Col md={10}>
                         <Row>
-                            <Col className='fluid' md={12}>
+                            <Col md={12}>
                                 <PageHeader id='dashboard'>Dashboard</PageHeader>
                             </Col>
                         </Row>
@@ -95,28 +102,13 @@ export default class Home extends React.Component {
                                 <WeatherPanel/>
                             </Col>
                             <Col md={3}>
-                                <Panel bsStyle="success">
-                                    <Panel.Heading>
-                                        <Panel.Title componentClass="h3">Panel heading</Panel.Title>
-                                    </Panel.Heading>
-                                    <Panel.Body>Panel content</Panel.Body>
-                                </Panel>
+                                <LightPanel/>
                             </Col>
                             <Col md={3}>
-                                <Panel bsStyle="info">
-                                    <Panel.Heading>
-                                        <Panel.Title componentClass="h3">Panel heading</Panel.Title>
-                                    </Panel.Heading>
-                                    <Panel.Body>Panel content</Panel.Body>
-                                </Panel>
+                                <Panel3 />
                             </Col>
                             <Col md={3}>
-                                <Panel bsStyle="warning">
-                                    <Panel.Heading>
-                                        <Panel.Title componentClass="h3">Panel heading</Panel.Title>
-                                    </Panel.Heading>
-                                <Panel.Body>Panel content</Panel.Body>
-                                </Panel>
+                                <Panel4 />
                             </Col>
                         </Row>
                     </Col>
