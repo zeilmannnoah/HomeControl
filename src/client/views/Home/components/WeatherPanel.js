@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel } from 'react-bootstrap';
+import {Row, Col, Panel } from 'react-bootstrap';
 import WeatherService from '../../../services/WeatherService.js';
 import './WeatherPanel.css'
 
@@ -9,20 +9,21 @@ export default class WeatherPanel extends React.Component {
         super(props);
 
         this.state = {
-            weather: null
+            data: null
         }
 
         this.WeatherService = new WeatherService();
-        this.setWeather = this.setWeather.bind(this);
+        this.setData = this.setData.bind(this);
 
-        this.setWeather();
+        this.setData();
     }
 
-    setWeather() {
+    setData() {
         this.WeatherService.fetchWeather()
             .then(data => {
+                console.log(data);
                 this.setState({
-                    weather: data
+                    data: data
                 });
             })
             .catch(err => {
@@ -31,17 +32,25 @@ export default class WeatherPanel extends React.Component {
     }
 
     getImagePath() {
-        return this.state.weather ? require('../../../imgs/weather/' + this.state.weather.icon + '.svg') : require('../../../imgs/ajaxLoading.svg');
+        return this.state.data ? require('../../../imgs/weather/' + this.state.data.icon + '.svg') : require('../../../imgs/dotsLoading.svg');
     }
 
     render() {
+        
         return (
             <Panel bsStyle="primary">
                 <Panel.Heading>
-                    <img className={this.state.weather ? 'weather-icon' : "loading center-block"} src={this.getImagePath()}/>
-                    <Panel.Title componentClass="h3">Panel heading</Panel.Title>
+                    <Row>
+                        <Col md={6}>
+                            <img className={this.state.data ? 'weather-icon' : "loading center-block"} src={this.getImagePath()}/>
+                        </Col>
+                        <Col md={6}>
+                            <h1 className='pull-right'>{this.state.data !== null ? this.state.data.weather.temp : ''}</h1>
+                            <Panel.Title componentClass="h3" className='pull-right'>{this.state.data !== null ? this.state.data.desc.ext : ''}</Panel.Title>
+                        </Col>
+                    </Row>
                 </Panel.Heading>
-                <Panel.Body>Panel content</Panel.Body>
+                <Panel.Body>{this.state.data !== null ? this.state.data.name : ''}</Panel.Body>
             </Panel>
         );
     }

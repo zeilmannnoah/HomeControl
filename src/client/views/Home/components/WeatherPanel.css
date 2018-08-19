@@ -2,8 +2,12 @@
 
 .weather-icon {
 	filter: invert(100%);
+	padding-top: 7px;
+	transform: scale(2.5);
 }
 
 .loading {
-	width: 80%;
+	width: 175%;
+    position: absolute;
+    top: -40px;
 }

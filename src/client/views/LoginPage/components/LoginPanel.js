@@ -21,36 +21,22 @@ export default class LoginPanel extends React.Component {
         this.UserService = new UserService();
 
         this.state = {
-            form: {
-                username: '',
-                fullname: '',
-                password: '',
-                check: '',
-            },
+            username: '',
+            fullname: '',
+            password: '',
+            check: '',
             disabled: true,
-            fetching: false,
-            signup: false,
             redirect: {
                 authenticated: false
             }
         };
     }
 
-    handleFullnameChange(e) {
-        this.setState({ 
-            form: { fullname: e.target.value,
-                    username: this.state.form.username,
-                    password: this.state.form.password,
-                    check: this.state.form.check }
-        }, this.checkSignup());
-    }
+    // Login
 
     handleUsernameChange(e) {
         this.setState({ 
-            form: { username: e.target.value,
-                fullname: this.state.form.fullname,
-                password: this.state.form.password,
-                check: this.state.form.check  }
+            username: e.target.value
         }, () => {
             if (this.state.signup) {
                 this.checkSignup();
@@ -64,10 +50,7 @@ export default class LoginPanel extends React.Component {
 
     handlePasswordChange(e) {
         this.setState({ 
-            form: { password: e.target.value,
-                    fullname: this.state.form.fullname,
-                    username: this.state.form.username,
-                    check: this.state.form.check  }
+            password: e.target.value
         }, () => {
             if (this.state.signup) {
                 this.checkSignup();
@@ -78,15 +61,105 @@ export default class LoginPanel extends React.Component {
         });
     }
 
+    usernameValidationState() {
+        const length = this.state.username.length;
+        
+        if (length === 0){
+            return null;
+        }
+        else if (length > 7){
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+    }
+
+    passwordValidationState() {
+        const length = this.state.password.length;
+        
+        if (length === 0){
+            return null;
+        }
+        else if (length > 7){
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+    }
+
+    checkUserAndPass() {
+        if (this.usernameValidationState() === 'success' && this.passwordValidationState() === 'success') {
+            this.setState({
+                disabled: false
+            });
+        }
+        else {
+            this.setState({
+                disabled: true
+            });
+        }
+    }
+
+    // Sign Up
+
+    handleFullnameChange(e) {
+        this.setState({ 
+            fullname: e.target.value
+        }, () => {
+            this.checkSignup();
+        });
+    }
+
     handleCheckChange(e) {
         this.setState({ 
-            form: { 
-                check: e.target.value,
-                fullname: this.state.form.fullname,
-                password: this.state.form.password,
-                username: this.state.form.username  
-            }
-        }, this.checkSignup());
+           check: e.target.value
+        }, () => {
+            this.checkSignup();
+        });
+    }
+ 
+    nameValidationState() {
+        const length = this.state.fullname.length;
+
+        if (length === 0){
+            return null;
+        }
+        else if (length > 3){
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+    }
+
+    checkValidationState() {
+        const length = this.state.check.length;
+
+        if (length === 0){
+            return null;
+        }
+        else if (length > 7  && this.state.password === this.state.check){
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+    }
+
+    checkSignup() {
+        if (this.state.username.length > 7 && this.state.fullname.length > 7 
+            && this.state.password.length > 7 && this.state.check.length > 7  && this.state.password === this.state.check) {
+            this.setState({
+                disabled: false
+            });
+        }
+        else {
+            this.setState({
+                disabled: true
+            });
+        }
     }
 
     handleSignup(e) {
@@ -94,55 +167,28 @@ export default class LoginPanel extends React.Component {
         if (this.state.signup) {
             this.setState({ 
                 signup: !this.state.signup,
-                form: { 
-                    check: '',
-                    fullname: '',
-                    password: '',
-                    username: ''  
-                }
+                check: '',
+                fullname: '',
+                password: '',
+                username: ''
             });
         }
         else {
             this.setState({ 
                 signup: !this.state.signup,
-                form: { 
-                    check: '',
-                    fullname: '',
-                    password: '',
-                    username: ''  
-                }
+                check: '',
+                fullname: '',
+                password: '',
+                username: ''
             });
         }
     }
 
-    checkUserAndPass() {
-        if (this.state.form.username.length != 0 && this.state.form.password.length != 0) {
-            this.setState({
-                disabled: false
-            });
-        }
-        else {
-            this.setState({
-                disabled: true
-            });
-        }
-    }
-
-    checkSignup() {
-        if (this.state.form.username.length != 0 && this.state.form.password.length != 0 && this.state.form.check.length != 0) {
-            this.setState({
-                disabled: false
-            });
-        }
-        else {
-            this.setState({
-                disabled: true
-            });
-        }
-    }
+    // Common
 
     handleSubmit(e) {
         e.preventDefault();
+        
         this.setState({
             fetching: true
         });
@@ -220,39 +266,39 @@ export default class LoginPanel extends React.Component {
                             <Col md={12}>
                                 <h2 className='text-center'>Signup <Glyphicon glyph='home'/></h2>
                                 <form onSubmit={this.handleSubmit} onChange={this.test}>
-                                    <FormGroup controlId='fullnameControl'>
+                                    <FormGroup controlId='fullnameControl' validationState={this.nameValidationState()}>
                                         <ControlLabel>Full Name</ControlLabel>
                                         <FormControl
                                             type='text'
-                                            placeholder='Enter fullname'
-                                            value={this.state.form.fullname}
+                                            placeholder='Enter full name'
+                                            value={this.state.fullname}
                                             onChange={this.handleFullnameChange}
                                         />
                                     </FormGroup>
-                                    <FormGroup controlId='usernameControl'>
+                                    <FormGroup controlId='usernameControl' validationState={this.usernameValidationState()}>
                                         <ControlLabel>Username</ControlLabel>
                                         <FormControl
                                             type='text'
                                             placeholder='Enter username'
-                                            value={this.state.form.username}
+                                            value={this.state.username}
                                             onChange={this.handleUsernameChange}
                                         />
                                     </FormGroup>
-                                    <FormGroup controlId='passwordControl'>
+                                    <FormGroup controlId='passwordControl' validationState={this.passwordValidationState()}>
                                         <ControlLabel>Password</ControlLabel>
                                         <FormControl
                                             type='password'
                                             placeholder='Enter Password'
-                                            value={this.state.form.password}
+                                            value={this.state.password}
                                             onChange={this.handlePasswordChange}
                                         />
                                     </FormGroup>
-                                    <FormGroup controlId='checkControl'>
+                                    <FormGroup controlId='checkControl' validationState={this.checkValidationState()}>
                                         <ControlLabel>Confirm Password</ControlLabel>
                                         <FormControl
                                             type='password'
                                             placeholder='Confirm Password'
-                                            value={this.state.form.check}
+                                            value={this.state.check}
                                             onChange={this.handleCheckChange}
                                         />
                                     </FormGroup>
@@ -265,7 +311,7 @@ export default class LoginPanel extends React.Component {
                                         disabled={this.state.disabled}
                                     >Sign up</Button>
                                     <Button 
-                                        className='center-block' 
+                                        className='center-block margin-top-10' 
                                         bsStyle='link'
                                         onClick={this.handleSignup}
                                     >Return to login</Button>
@@ -284,21 +330,21 @@ export default class LoginPanel extends React.Component {
                         <Col md={12}>
                             <h2 className='text-center'>Home Control <Glyphicon glyph='home'/></h2>
                             <form onSubmit={this.handleSubmit} onChange={this.test}>
-                                <FormGroup controlId='usernameControl'>
+                                <FormGroup controlId='usernameControl' validationState={this.usernameValidationState()}>
                                     <ControlLabel>Username</ControlLabel>
                                     <FormControl
                                         type='text'
                                         placeholder='Enter username'
-                                        value={this.state.form.username}
+                                        value={this.state.username}
                                         onChange={this.handleUsernameChange}
                                     />
                                 </FormGroup>
-                                <FormGroup controlId='passwordControl'>
+                                <FormGroup controlId='passwordControl' validationState={this.passwordValidationState()}>
                                     <ControlLabel>Password</ControlLabel>
                                     <FormControl
                                         type='password'
                                         placeholder='Enter Password'
-                                        value={this.state.form.password}
+                                        value={this.state.password}
                                         onChange={this.handlePasswordChange}
                                     />
                                 </FormGroup>
@@ -311,8 +357,7 @@ export default class LoginPanel extends React.Component {
                                     disabled={this.state.disabled}
                                 >Sign In</Button>
                                 <Button 
-                                    id='forgot-btn'
-                                    className='center-block' 
+                                    className='center-block margin-top-10' 
                                     bsStyle='link'
                                     >Forgot Password</Button>
                                 <Button 

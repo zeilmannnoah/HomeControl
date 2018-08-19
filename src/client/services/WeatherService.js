@@ -15,15 +15,17 @@ export default class WeatherService {
                     params: {
                         lat: 37.22,
                         lon: -93.3,
+                        units:'imperial',
                         appid: this.apikey
                     }
                 })
                 .then(res => {
+                    console.log(res);
                     resolve({
                         name: res.data.name,
                         icon: this.neutralIcons.includes(res.data.weather[0].icon) ? res.data.weather[0].icon.replace(/[^0-9]/, "") : res.data.weather[0].icon,
                         desc: {
-                            ext: res.data.weather[0].description,
+                            ext: res.data.weather[0].description.split(' ').map(i => i[0].toUpperCase() + i.slice(1)).join(' '),
                             min: res.data.weather[0].main
                         },
                         weather: {
@@ -32,7 +34,9 @@ export default class WeatherService {
                             temp: res.data.main.temp,
                             temp_max: res.data.main.temp_max,
                             temp_min: res.data.main.temp_min,
-                            wind: res.data.wind
+                            wind: res.data.wind,
+                            sunrise: new Date(1000 * res.data.sys.sunrise),
+                            setset: new Date(1000 * res.data.sys.sunset)
                         }
                     });
                 })
