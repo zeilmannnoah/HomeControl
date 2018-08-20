@@ -16,3 +16,7 @@
 .panel-heading {
     height: 110px;
 }
+
+.warning-text {
+    color: #a94442;
+}

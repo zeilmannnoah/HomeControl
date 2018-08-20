@@ -38,17 +38,20 @@ export default class LighPanel extends React.Component {
 
     handleCheck() {
         this.setState({
-            powerStateText: (!this.state.powerState ? 'On' : 'Off')
+            powerState: !this.state.powerState
         });
 
         this.LightService.toggleDevice(this.state.info.deviceId)
         .then(res => {
             this.setState({
-                powerState: res
+                powerStateText: res ? 'On' : 'Off'
             });
         })
         .catch(err => {
             console.log(err);
+            this.setState({
+                powerState: !this.state.powerState
+            });
         });
     }
 

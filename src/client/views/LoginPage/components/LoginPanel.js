@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Grid, Row, Col, Panel, FormGroup, ControlLabel, FormControl, Button, Glyphicon } from 'react-bootstrap';
+import { CSSTransition } from 'react-transition-group';
 import UserService from '../../../services/UserService.js';
 import ajaxLoading from '../../../imgs/squaresLoading.svg';
 import './loginPanel.css';
@@ -9,13 +10,10 @@ export default class LoginPanel extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleFullnameChange = this.handleFullnameChange.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleCheckChange = this.handleCheckChange.bind(this);
+        this.handleFormChange = this.handleFormChange.bind(this);
+        this.checkUserAndPass = this.checkUserAndPass.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSignup = this.handleSignup.bind(this);
-        this.checkUserAndPass = this.checkUserAndPass.bind(this);
         this.checkSignup = this.checkSignup.bind(this);
         this.onFailuire = this.onFailuire.bind(this);
         this.UserService = new UserService();
@@ -32,35 +30,45 @@ export default class LoginPanel extends React.Component {
         };
     }
 
-    // Login
-
-    handleUsernameChange(e) {
-        this.setState({ 
-            username: e.target.value
-        }, () => {
-            if (this.state.signup) {
-                this.checkSignup();
-            }
-            else {
-                this.checkUserAndPass();
-            }
-        });
-        
+    handleFormChange(e) {
+        switch(e.target.name) {
+            case 'fullname':
+                this.setState({
+                    fullname: e.target.value
+                }, this.checkSignup);
+                break;
+            case 'username':
+                this.setState({
+                    username: e.target.value
+                }, this.state.signup ? this.checkSignup : this.checkUserAndPass);
+                break;
+            case 'password':
+                this.setState({
+                    password: e.target.value
+                }, this.state.signup ? this.checkSignup : this.checkUserAndPass);
+                break;
+            default:
+                this.setState({
+                    check: e.target.value
+                }, this.checkSignup);
+                break;
+        }
     }
 
-    handlePasswordChange(e) {
-        this.setState({ 
-            password: e.target.value
-        }, () => {
-            if (this.state.signup) {
-                this.checkSignup();
-            }
-            else {
-                this.checkUserAndPass();
-            }
-        });
-    }
+    nameValidationState() {
+        const length = this.state.fullname.length;
 
+        if (length === 0){
+            return null;
+        }
+        else if (length > 3){
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+    }
+    
     usernameValidationState() {
         const length = this.state.username.length;
         
@@ -74,7 +82,7 @@ export default class LoginPanel extends React.Component {
             return 'error';
         }
     }
-
+    
     passwordValidationState() {
         const length = this.state.password.length;
         
@@ -82,6 +90,20 @@ export default class LoginPanel extends React.Component {
             return null;
         }
         else if (length > 7){
+            return 'success';
+        }
+        else {
+            return 'error';
+        }
+    }
+    
+    checkValidationState() {
+        const length = this.state.check.length;
+
+        if (length === 0){
+            return null;
+        }
+        else if (length > 7  && this.state.password === this.state.check){
             return 'success';
         }
         else {
@@ -102,52 +124,6 @@ export default class LoginPanel extends React.Component {
         }
     }
 
-    // Sign Up
-
-    handleFullnameChange(e) {
-        this.setState({ 
-            fullname: e.target.value
-        }, () => {
-            this.checkSignup();
-        });
-    }
-
-    handleCheckChange(e) {
-        this.setState({ 
-           check: e.target.value
-        }, () => {
-            this.checkSignup();
-        });
-    }
- 
-    nameValidationState() {
-        const length = this.state.fullname.length;
-
-        if (length === 0){
-            return null;
-        }
-        else if (length > 3){
-            return 'success';
-        }
-        else {
-            return 'error';
-        }
-    }
-
-    checkValidationState() {
-        const length = this.state.check.length;
-
-        if (length === 0){
-            return null;
-        }
-        else if (length > 7  && this.state.password === this.state.check){
-            return 'success';
-        }
-        else {
-            return 'error';
-        }
-    }
-
     checkSignup() {
         if (this.state.username.length > 7 && this.state.fullname.length > 7 
             && this.state.password.length > 7 && this.state.check.length > 7  && this.state.password === this.state.check) {
@@ -164,13 +140,17 @@ export default class LoginPanel extends React.Component {
 
     handleSignup(e) {
         e.preventDefault();
+        
         if (this.state.signup) {
             this.setState({ 
                 signup: !this.state.signup,
                 check: '',
                 fullname: '',
                 password: '',
-                username: ''
+                username: '',
+                disabled: true
+            }, () => {
+                console.log('Password:\t' + this.passwordValidationState() + '\nUsername:\t' + this.usernameValidationState());
             });
         }
         else {
@@ -179,12 +159,13 @@ export default class LoginPanel extends React.Component {
                 check: '',
                 fullname: '',
                 password: '',
-                username: ''
+                username: '',
+                disabled: true
+            }, () => {
+                console.log('Password:\t' + this.passwordValidationState() + '\nUsername:\t' + this.usernameValidationState());
             });
         }
     }
-
-    // Common
 
     handleSubmit(e) {
         e.preventDefault();
@@ -261,19 +242,29 @@ export default class LoginPanel extends React.Component {
         if (this.state.signup) {
             return (
                 <Panel id='login-panel'>
+                    <div className='hidden'>{this.usernameValidationState()}</div>
                     <Panel.Body>
                         <Row>
                             <Col md={12}>
                                 <h2 className='text-center'>Signup <Glyphicon glyph='home'/></h2>
-                                <form onSubmit={this.handleSubmit} onChange={this.test}>
+                                <form onSubmit={this.handleSubmit}>
                                     <FormGroup controlId='fullnameControl' validationState={this.nameValidationState()}>
                                         <ControlLabel>Full Name</ControlLabel>
                                         <FormControl
                                             type='text'
                                             placeholder='Enter full name'
                                             value={this.state.fullname}
-                                            onChange={this.handleFullnameChange}
+                                            name='fullname'
+                                            onChange={this.handleFormChange}
                                         />
+                                        <CSSTransition
+                                            in={this.nameValidationState() === 'error'}
+                                            timeout={300}
+                                            classNames="message"
+                                            unmountOnExit
+                                        >
+                                            <p className='pull-right warning-text margin-bottom-15' >*Fullname too short</p>
+                                        </CSSTransition>
                                     </FormGroup>
                                     <FormGroup controlId='usernameControl' validationState={this.usernameValidationState()}>
                                         <ControlLabel>Username</ControlLabel>
@@ -281,8 +272,17 @@ export default class LoginPanel extends React.Component {
                                             type='text'
                                             placeholder='Enter username'
                                             value={this.state.username}
-                                            onChange={this.handleUsernameChange}
+                                            name='username'
+                                            onChange={this.handleFormChange}
                                         />
+                                        <CSSTransition
+                                            in={this.usernameValidationState() === 'error'}
+                                            timeout={300}
+                                            classNames="message"
+                                            unmountOnExit
+                                        >
+                                            <p className='pull-right warning-text margin-bottom-15' >*Username too short</p>
+                                        </CSSTransition>
                                     </FormGroup>
                                     <FormGroup controlId='passwordControl' validationState={this.passwordValidationState()}>
                                         <ControlLabel>Password</ControlLabel>
@@ -290,8 +290,17 @@ export default class LoginPanel extends React.Component {
                                             type='password'
                                             placeholder='Enter Password'
                                             value={this.state.password}
-                                            onChange={this.handlePasswordChange}
+                                            name='password'
+                                            onChange={this.handleFormChange}
                                         />
+                                        <CSSTransition
+                                            in={this.passwordValidationState() === 'error'}
+                                            timeout={300}
+                                            classNames="message"
+                                            unmountOnExit
+                                        >
+                                            <p className='pull-right warning-text margin-bottom-15' >*Password too short</p>
+                                        </CSSTransition>
                                     </FormGroup>
                                     <FormGroup controlId='checkControl' validationState={this.checkValidationState()}>
                                         <ControlLabel>Confirm Password</ControlLabel>
@@ -299,8 +308,18 @@ export default class LoginPanel extends React.Component {
                                             type='password'
                                             placeholder='Confirm Password'
                                             value={this.state.check}
-                                            onChange={this.handleCheckChange}
+                                            name='check'
+                                            onChange={this.handleFormChange}
                                         />
+                                        <CSSTransition
+                                            in={this.checkValidationState() === 'error'}
+                                            timeout={300}
+                                            classNames="message"
+                                            unmountOnExit
+                                        >
+                                            <p className='pull-right warning-text margin-bottom-15' >*{this.state.check.length <= 7 ? 'Password too short' : 'Passwords do not match'}</p>
+                                        </CSSTransition>
+                                        <p className={this.checkValidationState() === 'error' ? 'hidden' : 'invisible'}>:&nbsp;</p>
                                     </FormGroup>
                                     <Button 
                                         className='center-block' 
@@ -336,8 +355,18 @@ export default class LoginPanel extends React.Component {
                                         type='text'
                                         placeholder='Enter username'
                                         value={this.state.username}
-                                        onChange={this.handleUsernameChange}
+                                        name='username'
+                                        onChange={this.handleFormChange}
                                     />
+                                    <FormControl.Feedback />
+                                    <CSSTransition
+                                        in={this.usernameValidationState() === 'error'}
+                                        timeout={300}
+                                        classNames="message"
+                                        unmountOnExit
+                                    >
+                                        <p className='pull-right warning-text'>*Username too short</p>
+                                    </CSSTransition>
                                 </FormGroup>
                                 <FormGroup controlId='passwordControl' validationState={this.passwordValidationState()}>
                                     <ControlLabel>Password</ControlLabel>
@@ -345,8 +374,18 @@ export default class LoginPanel extends React.Component {
                                         type='password'
                                         placeholder='Enter Password'
                                         value={this.state.password}
-                                        onChange={this.handlePasswordChange}
+                                        name='password'
+                                        onChange={this.handleFormChange}
                                     />
+                                    <CSSTransition
+                                        in={this.passwordValidationState() === 'error'}
+                                        timeout={300}
+                                        classNames="message"
+                                        unmountOnExit
+                                    >
+                                        <p className='pull-right warning-text margin-bottom-15' >*Password too short</p>
+                                    </CSSTransition>
+                                    <p className={this.passwordValidationState() === 'error' ? 'hidden' : 'invisible'}>:&nbsp;</p>
                                 </FormGroup>
                                 <Button 
                                     className='center-block' 
