@@ -1,8 +1,41 @@
-.panel3-panel {
-  border-color: #f0ad4e !important;
+.calendar-panel {
+	border-color: #f0ad4e !important;
 }
 
-.panel3-panel-heading {
-  background-color: #f0ad4e !important;
-  border-color:  #f0ad4e !important;
+.calendar-panel-heading {
+	background-color: #f0ad4e !important;
+	border-color:  #f0ad4e !important;
+}
+
+.calendar-panel-heading > div > div {
+	color: white;
+}
+
+.calendar-display {
+	background-color: #e09325;
+	width: 5vw;
+	height: 5vw;
+	border: 3px solid white;
+	border-radius: 5px;
+    position: relative;
+    margin-top: 20%;
+	margin-left: 10%;
+}
+
+.month-display {
+	border-bottom: 2px solid white;
+}
+
+.date-display {
+	margin-top: 10%;
+    position: relative;
+	font-size: 30px;
+}
+
+.date {
+	font-size: 35px;
+}
+
+.calendar-panel .panel-body > a {
+    color: #f0ad4e;
 }

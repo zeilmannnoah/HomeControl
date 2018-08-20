@@ -81,7 +81,7 @@ export default class Home extends React.Component {
                                 Lights
                             </NavItem>
                             <NavItem className='sidebar-option' eventKey={3}>
-                                Calander
+                                Calendar
                             </NavItem>
                             <NavItem className='sidebar-option' eventKey={5}>
                                 Blackboard

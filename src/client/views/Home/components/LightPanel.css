@@ -7,6 +7,11 @@
     font-size: 70px;
 }
 
+.light-panel-heading >  h1 {
+    color: white;
+    font-size: 25px;
+}
+
 .light-panel-heading {
     background-color: #5cb85c !important;
     border-color:  #5cb85c !important;
@@ -55,4 +60,8 @@ input:focus + .slider {
 
 input:checked + .slider:before {
     transform: translateY(-41px);
+}
+
+.light-panel .panel-body > a {
+    color: #5cb85c;
 }

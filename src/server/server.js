@@ -7,47 +7,55 @@ const CalendarAPI = require('./apis/CalendarAPI.js');
 const app = express();
 app.use(express.static("dist"));
 
-CalendarAPI.listCalendars();
-
 app.get("/api/login", (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-  UserAuthDAO.retreiveUser(req.query.username)
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.send(err);
-  });
+	UserAuthDAO.retreiveUser(req.query.username)
+	.then(data => {
+		res.send(data);
+	})
+	.catch(err => {
+		res.send(err);
+	});
 });
 
 app.get("/api/signup", (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-  UserAuthDAO.addUser(req.query.fullname, req.query.username, req.query.hashPass)
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.send(err);
-  });
+	UserAuthDAO.addUser(req.query.fullname, req.query.username, req.query.hashPass)
+	.then(data => {
+		res.send(data);
+	})
+	.catch(err => {
+		res.send(err);
+	});
 });
 
 app.get("/api/getDevices", (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.send(SmartHomeAPI.devices.map(i => i.data));
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+	res.send(SmartHomeAPI.devices.map(i => i.data));
 });
 
 app.get("/api/toggleDevice", (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-  SmartHomeAPI.toggleDevice(req.query.deviceId)
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+	SmartHomeAPI.toggleDevice(req.query.deviceId)
+	.then(data => {
+		res.send(data);
+	})
+	.catch(err => {
+		console.log(err);
+	});
 });
+
+app.get('/api/getEvents', (req, res) => {
+	CalendarAPI.listEvents()
+	.then(data => {
+		res.send(data);
+	})
+	.catch(err => {
+		console.log(err);
+	});
+})
 
 app.listen(8080, () => console.log("Listening on port 8080!"));

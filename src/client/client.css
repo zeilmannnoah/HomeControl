@@ -2,12 +2,10 @@
 	padding: 0px 0px 0px 0px !important;
 }
 
-.loading {
-	width: 100%;
-    position: relative;
-    top: -40px;
-}
-
 .body-dark {
 	background-color: #18191c
+}
+
+.panel-heading {
+	min-height: 135px;
 }

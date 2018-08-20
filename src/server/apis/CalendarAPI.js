@@ -1,4 +1,5 @@
 const Config = require('../../auth/Settings');
+const Auth = require('../../auth/Auth.json');
 const Calendar = require('node-google-calendar');
 
 let CalendarAPI = {},
@@ -7,28 +8,8 @@ let CalendarAPI = {},
         showHidden: true
     };  
 
-CalendarAPI.listCalendars = () => {
-    calendar.CalendarList.list(params)
-    .then(resp => {
-        console.log(resp);
-        params = {
-            scope: {
-                type: 'user',
-                value: 'zeilmannnoah@gmail.com'
-            },
-            role: 'owner'
-        };
-        calendar.Acl.insert("zeilmannnoah@gmail.com", params)
-        .then(resp => {
-            console.log(resp);
-        }).catch(err => {
-            console.log(err.message);
-        });
-     }).catch(err => {
-        console.log(err.message);
-    });
+CalendarAPI.listEvents = () => {
+    return calendar.Events.list(Auth.apis.google.calendarId, {});
 }
-
-
 
 module.exports = CalendarAPI;

@@ -26,16 +26,14 @@ UserAuthDAO.retreiveUser = (username) => {
         .build();
 
     return new Promise((resolve, reject) => {
-        request = new Request(query, (err, rowCount, rows) => {
+        connection.execSql(new Request(query, (err, rowCount, rows) => {
             if (err) {
                 reject(err)
             }
             else {
                 resolve(rows);
             }
-        });
-        
-        connection.execSql(request);
+        }));
     });
 };
 

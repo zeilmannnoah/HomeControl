@@ -2,6 +2,9 @@
 
 .weather-icon {
 	filter: invert(100%);
+	position: relative;
+    top: -10px;
+    margin-top: 10%;
 }
 
 .degree {
@@ -18,4 +21,31 @@
 
 .desc {
 	white-space: nowrap;
+}
+
+.weather-panel {
+    border-color: #337ab7 !important;
+}
+
+.weather-panel-heading >  h1 {
+    color: white;
+    font-size: 25px;
+}
+
+.weather-panel-heading >  h1 {
+    color: white;
+    font-size: 25px;
+}
+
+.weather-panel-heading > div > div {
+	color: white;
+}
+
+.weather-panel-heading {
+    background-color: #337ab7 !important;
+    border-color:  #337ab7 !important;
+}
+
+.lights-panel .panel-body > a {
+    color: #337ab7;
 }
