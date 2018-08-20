@@ -1,18 +1,13 @@
 const express = require("express");
 const os = require("os");
 const UserAuthDAO = require('./repositories/UserAuthDAO.js');
-const SmartHomeDAO = require('./repositories/SmartHomeDAO.js');
-
-SmartHomeDAO.lookForPlugs()
-.then(devices => {
-  console.log(devices);
-})
-.catch(err => {
-  console.log(err);
-});
+const SmartHomeAPI = require('./apis/SmartHomeAPI.js');
+const CalendarAPI = require('./apis/CalendarAPI.js');
 
 const app = express();
 app.use(express.static("dist"));
+
+CalendarAPI.listCalendars();
 
 app.get("/api/login", (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -40,13 +35,13 @@ app.get("/api/signup", (req, res) => {
 
 app.get("/api/getDevices", (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.send(SmartHomeDAO.devices.map(i => i.data));
+  res.send(SmartHomeAPI.devices.map(i => i.data));
 });
 
 app.get("/api/toggleDevice", (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-  SmartHomeDAO.toggleDevice(req.query.deviceId)
+  SmartHomeAPI.toggleDevice(req.query.deviceId)
   .then(data => {
     res.send(data);
   })

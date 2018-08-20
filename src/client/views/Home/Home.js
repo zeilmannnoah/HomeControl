@@ -4,7 +4,7 @@ import { Grid, Row, Col, Nav, Navbar, NavDropdown, NavItem, MenuItem, Glyphicon,
 import UserService from '../../services/UserService.js';
 import WeatherPanel from './components/WeatherPanel.js';
 import LightPanel from './components/LightPanel.js';
-import Panel3 from './components/Panel3.js';
+import Panel3 from './components/CalendarPanel.js';
 import Panel4 from './components/Panel4.js';
 import './Home.css';
 

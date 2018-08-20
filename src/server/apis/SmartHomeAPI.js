@@ -1,16 +1,16 @@
 // TODO: Set static ip for tplink
 const { Client } = require('tplink-smarthome-api');
 const client = new Client()
-const SmartHome = {
+const SmartHomeAPI = {
     devices: []
 }
 
-SmartHome.lookForPlugs = () => {
+SmartHomeAPI.lookForPlugs = () => {
     return new Promise((resolve, reject) => {
         client.startDiscovery().on('device-new', (device) => {
             device.getSysInfo().then(info => {
                 device.getPowerState().then(state => {
-                    SmartHome.devices.push({
+                    SmartHomeAPI.devices.push({
                         device: device,
                         data: { 
                             info: info,
@@ -27,12 +27,12 @@ SmartHome.lookForPlugs = () => {
             });
         });
         setTimeout(() => {
-            resolve(SmartHome.devices);
+            resolve(SmartHomeAPI.devices);
         }, 5000);
     });
 }
 
-SmartHome.toggleDevice = (deviceId) => {
+SmartHomeAPI.toggleDevice = (deviceId) => {
     return new Promise((resolve, reject) => {
         let devices;
 
@@ -40,7 +40,7 @@ SmartHome.toggleDevice = (deviceId) => {
             reject('Missing parameter device id');
         }
         
-        devices = SmartHome.devices.filter(i => i.data.info.deviceId === deviceId)
+        devices = SmartHomeAPI.devices.filter(i => i.data.info.deviceId === deviceId)
         
         if (devices.length > 1) {
             reject('More than one device found');
@@ -51,8 +51,8 @@ SmartHome.toggleDevice = (deviceId) => {
 
         devices[0].device.togglePowerState()
         .then(res => {
-            let index = SmartHome.devices.indexOf(devices[0]);
-            SmartHome.devices.splice(index, 1, {
+            let index = SmartHomeAPI.devices.indexOf(devices[0]);
+            SmartHomeAPI.devices.splice(index, 1, {
                 device: devices[0].device,
                 data: { 
                     info: devices[0].data.info,
@@ -67,4 +67,4 @@ SmartHome.toggleDevice = (deviceId) => {
     });
 }
 
-module.exports = SmartHome;
+module.exports = SmartHomeAPI;

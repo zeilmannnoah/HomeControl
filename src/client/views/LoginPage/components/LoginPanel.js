@@ -358,7 +358,6 @@ export default class LoginPanel extends React.Component {
                                         name='username'
                                         onChange={this.handleFormChange}
                                     />
-                                    <FormControl.Feedback />
                                     <CSSTransition
                                         in={this.usernameValidationState() === 'error'}
                                         timeout={300}
