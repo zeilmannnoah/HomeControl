@@ -1,6 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { Panel, Col, Row} from 'react-bootstrap';
+import { Panel, Col, Row, Glyphicon } from 'react-bootstrap';
 import LightService from '../../../services/LightService.js';
 import LoadingSvg from '../../../imgs/dotsLoading.svg';
 import './LightPanel.css'
@@ -65,7 +64,7 @@ export default class LightPanel extends React.Component {
                     <Panel.Heading className='light-panel-heading'>
                         <h1 className='text-center'>{this.state.offline}</h1>
                     </Panel.Heading>
-                    <Panel.Body><a>Access lights</a></Panel.Body>
+                    <Panel.Body><a>Access Lights Settings<Glyphicon className='pull-right top-3' glyph='circle-arrow-right'/></a></Panel.Body>
                 </Panel>
             );
         }
@@ -83,19 +82,27 @@ export default class LightPanel extends React.Component {
             <Panel className='light-panel'>
                 <Panel.Heading className='light-panel-heading'>
                     <Row>
-                        <Col md={6}>
-                                <label className="switch">
-                                    <input type="checkbox" checked={this.state.powerState} onChange={this.handleCheck}/>
-                                    <span className="slider"></span>
-                                </label>
+                        <Col md={5}>
+                            <label className="switch">
+                                <input type="checkbox" checked={this.state.powerState} onChange={this.handleCheck}/>
+                                <span className="slider round"></span>
+                            </label>
                         </Col>
-                        <Col md={6}>
-                            <h1>{this.state.powerStateText}</h1>
-                            <Panel.Title componentClass="h3" className='pull-right'>{this.state.info.alias}</Panel.Title>
+                        <Col md={7}>
+                            <Row>
+                                <Col md={12}>
+                                    <h1 className='pull-right'>{this.state.powerStateText}</h1>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={12}>
+                                    <Panel.Title componentClass="h3" className='pull-right'>{this.state.info.alias}</Panel.Title>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Panel.Heading>
-                <Panel.Body><a>Access lights</a></Panel.Body>
+                <Panel.Body><a>Access Lights<Glyphicon className='pull-right top-3' glyph='circle-arrow-right'/></a></Panel.Body>
             </Panel>
         );
     }

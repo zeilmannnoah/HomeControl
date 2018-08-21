@@ -15,11 +15,12 @@
 	background-color: #e09325;
 	width: 5vw;
 	height: 5vw;
+	max-height: 64px;
+	max-width: 64px;
 	border: 3px solid white;
 	border-radius: 5px;
     position: relative;
-    margin-top: 20%;
-	margin-left: 10%;
+    right: 5%;
 }
 
 .month-display {
@@ -29,7 +30,7 @@
 .date-display {
 	margin-top: 10%;
     position: relative;
-	font-size: 30px;
+	font-size: 150%;;
 }
 
 .date {

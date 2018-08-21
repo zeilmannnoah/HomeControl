@@ -6,6 +6,18 @@
 	background-color: #18191c
 }
 
-.panel-heading {
-	min-height: 135px;
+.padding-right-5 {
+	padding-right: 5px;
+}
+
+.no-left-padding {
+	padding-left: 0px !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.top-3 {
+	top: 3px;
 }

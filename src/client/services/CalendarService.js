@@ -15,7 +15,12 @@ export default class CalendarService {
                 resolve(res.data);
             })
             .catch(err => {
-                reject(err);
+                if (err.request.status === 0) {
+                    reject('A connection could not be established');
+                }
+                else {
+                    reject(err);
+                }
             });
         });
     }

@@ -3,8 +3,11 @@
 }
 
 .light-panel-heading > div > div >  h1 {
+    font-size: 35px;
+}
+
+.light-panel-heading > div > div {
     color: white;
-    font-size: 70px;
 }
 
 .light-panel-heading >  h1 {
@@ -18,12 +21,12 @@
 }
 
 .switch {
-    margin-top: 10%;
-    margin-left: 30%;
     position: relative;
+    top: 50%;
+    /* transform: translateY(-50%); */
     display: inline-block;
-    width: 34px;
-    height: 75px;
+    width: 40px;
+    height: 100px;
 }
 
 .switch input {display:none;}
@@ -35,7 +38,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #356135;
+    border: 3px solid white;
     transition: .4s;
 }
 
@@ -51,15 +55,15 @@
 }
 
 input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #8aef8a;
 }
 
 input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #8aef8a;
 }
 
 input:checked + .slider:before {
-    transform: translateY(-41px);
+    transform: translateY(-61px);
 }
 
 .light-panel .panel-body > a {

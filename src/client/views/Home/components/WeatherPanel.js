@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col, Panel } from 'react-bootstrap';
+import {Row, Col, Panel, Glyphicon } from 'react-bootstrap';
 import WeatherService from '../../../services/WeatherService.js';
 import MapsService from '../../../services/MapsService.js';
 import LoadingSvg from '../../../imgs/dotsLoading.svg';
@@ -69,7 +69,7 @@ export default class WeatherPanel extends React.Component {
                     <Panel.Heading className='weather-panel-heading'>
                         <h1 className='text-center'>{this.state.offline}</h1>
                     </Panel.Heading>
-                    <Panel.Body></Panel.Body>
+                    <Panel.Body><a>Access Weather Settings<Glyphicon className='pull-right top-3' glyph='circle-arrow-right'/></a></Panel.Body>
                 </Panel>
             );
         }
@@ -92,15 +92,27 @@ export default class WeatherPanel extends React.Component {
                             <img className='weather-icon' src={this.getImagePath()}/>
                         </Col>
                         <Col md={6} className>
-                            <h1 className='pull-right degree'>{this.state.weatherData.weather.temp}&#8457;</h1>
-                            <Panel.Title componentClass="h3" className='pull-right desc'>{this.state.weatherData.desc.ext}</Panel.Title>
-                            <Panel.Title componentClass="h3" className='pull-right desc'>
-                                {this.state.locationData.results.length > 2 ? this.state.locationData.results[2].formatted_address : ''}
-                                </Panel.Title>
+                            <Row>
+                                <Col md={12}>
+                                    <h1 className='pull-right degree'>{this.state.weatherData.weather.temp}&#8457;</h1>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={12}>
+                                <Panel.Title componentClass="h3" className='pull-right desc'>{this.state.weatherData.desc.ext}</Panel.Title>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={12}>
+                                    <Panel.Title componentClass="h3" className='pull-right desc'>
+                                        {this.state.locationData.results.filter(i => i.types.includes("locality") && i.types.includes("political"))[0].formatted_address}
+                                    </Panel.Title>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Panel.Heading>
-                <Panel.Body><a>Access Weather</a></Panel.Body>
+                <Panel.Body><a>Access Weather<Glyphicon className='pull-right top-3' glyph='circle-arrow-right'/></a></Panel.Body>
             </Panel>
         );
     }

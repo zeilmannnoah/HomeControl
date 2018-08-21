@@ -4,7 +4,7 @@ export default class LightService {
 
     getDevices() {
         return new Promise((resolve, reject) => {
-            axios.get('http://localhoast:8080/api/getDevices')
+            axios.get('http://localhost:8080/api/getDevices')
             .then(res => {
                 if (res.data.length === 0) {
                     reject('No Devices found');
