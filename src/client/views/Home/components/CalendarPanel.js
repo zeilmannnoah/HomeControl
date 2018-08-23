@@ -78,6 +78,7 @@ export default class CalendarPanel extends React.Component {
                 calendarData: data,
                 nextStateDate: new Date(data[0].start.dateTime)
             });
+            this.clock(data[0].start.dateTime);
         })
         .catch(err => {
             console.log(err);
@@ -85,6 +86,15 @@ export default class CalendarPanel extends React.Component {
                 offline: err
             });
         });
+    }
+
+    clock(time) {
+        var check = setInterval(() => {
+            if (new Date() > new Date(time)) {
+                clearInterval(check);
+                this.getData();
+            }
+        }, 3000);
     }
 
     render() {
@@ -140,14 +150,14 @@ export default class CalendarPanel extends React.Component {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <Panel.Title componentClass="h3" className='pull-right'>{this.state.calendarData ? this.state.calendarData[0].summary.replace(/[A-Z]{3} [0-9]{3} - /g, "") : "..."}</Panel.Title>
+                            <Panel.Title componentClass="h3" className='pull-right'>{this.state.calendarData[0].summary.replace(/[A-Z]{3} [0-9]{3} - /g, "")}</Panel.Title>
                         </Col>
                     </Row>
                     <Row>
                         <Col md={12}>
                             <Panel.Title componentClass="h3" className='pull-right'>
-                                on {this.state.calendarData ? this.state.nextStateDate.toDateString().substring(0, 3) : '...'} at&nbsp;
-                                    {this.state.calendarData ? this.state.nextStateDate.toLocaleTimeString().replace(/(.+:.+):.+ /g, '$1 ') : '...'}
+                                on {this.state.nextStateDate.toDateString().substring(0, 3)} at&nbsp;
+                                    {this.state.nextStateDate.toLocaleTimeString().replace(/(.+:.+):.+ /g, '$1 ')}
                             </Panel.Title>
                         </Col>
                     </Row>

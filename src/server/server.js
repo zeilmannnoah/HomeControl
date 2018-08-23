@@ -40,7 +40,7 @@ app.get('/api/getEvents', (req, res) => {
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
 	CalendarAPI.listEvents()
-	 .then(data => res.send(data)).catch(err => res.send(err));
+	 .then(data => res.send(data.filter(i => new Date(i.start.dateTime) > new Date()))).catch(err => res.send(err));
 })
 
 app.listen(8080, () => console.log("Listening on port 8080!"));

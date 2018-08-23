@@ -5,15 +5,16 @@ const Calendar = require('node-google-calendar');
 let CalendarAPI = {},
     calendar = new Calendar(Config),
     oneWeekAhead = new Date(new Date().getTime() + 604800000).toISOString(),
-    oneDayBehind = new Date(new Date().getTime() - 86400000).toISOString();
+    now = new Date().toISOString(),
     params = {
         orderBy: 'startTime',
         timeMax: oneWeekAhead,
-        timeMin: oneDayBehind
-    };  
+        timeMin: now,
+        singleEvents: true
+    };
 
 CalendarAPI.listEvents = () => {
-    return calendar.Events.list(Auth.apis.google.email, {});
+    return calendar.Events.list(Auth.apis.google.email, params);
 }
 
 module.exports = CalendarAPI;
